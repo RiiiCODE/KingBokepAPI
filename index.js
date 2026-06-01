@@ -19,11 +19,18 @@ Query    :`, query || '-');
 
 async function fetchHTML(url) {
   const browser = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: true
-  });
+  args: [
+    ...chromium.args,
+    "--hide-scrollbars",
+    "--disable-web-security"
+  ],
+
+  defaultViewport: chromium.defaultViewport,
+
+  executablePath: await chromium.executablePath(),
+
+  headless: true
+});
 
   try {
     const page = await browser.newPage();
